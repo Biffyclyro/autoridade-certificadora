@@ -14,6 +14,7 @@ import javax.crypto.NoSuchPaddingException;
 import java.security.InvalidKeyException;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 public class AppTest {
     @Test
@@ -46,7 +47,8 @@ public class AppTest {
         final var pair = pairGeneratorGen.generateKeyPair();
 
         final var ca = new AutoridadeCertificadoraImpl(cp);
-        final var certificado = new Certificado(pair.getPublic(),
+
+        final var certificado = new Certificado(ca.getCertificado().getChavePublica(),
                 "Fulano",
                 "0000",
                 "email",
@@ -55,8 +57,8 @@ public class AppTest {
 
 
         ca.assinaCertificado(certificado);
+        System.out.println(certificado.verificaAutenticidade());
 
 
-        Assertions.assertTrue(certificado.verificaAutenticidade());
     }
 }

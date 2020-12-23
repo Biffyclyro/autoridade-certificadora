@@ -1,10 +1,12 @@
 package br.ufsm.poli.csi.cripto.certificados;
 
+import java.io.Serializable;
+
 /**
  * Interface que representa uma Autoridade de Certificação digital,
  * bem como todos os serviços que esta deverá prover.
  */
-public interface AutoridadeCertificadora {
+public interface AutoridadeCertificadora extends Serializable {
 
     /**
      * Assina o certificado recebido por parâmetro.

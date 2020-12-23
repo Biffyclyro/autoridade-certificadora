@@ -22,9 +22,9 @@ public class AutoridadeCertificadoraImpl implements AutoridadeCertificadora {
     public void assinaCertificado(Certificado certificado) {
         if (this.getCertificado().getTipoCertificado().ordinal() > certificado.getTipoCertificado().ordinal()) {
             certificado.setAutoridadeCertificadora(this);
-            certificado.setCertificadoPor(cp.getCertificado().getCertificadoPor());
+            certificado.setCertificadoPor(cp.getCertificado());
             certificado.setValidade(new Date());
-            final var hash = Util.getHash(certificado);
+            var hash = Util.getHash(certificado);
 
 
             try {

@@ -79,7 +79,7 @@ public class Certificado implements Assinavel {
                 final var assinaturaDecrypt = cipherAssinatura.doFinal(assinatura);
                 this.setAssinatura(assinatura);
 
-                return Arrays.equals(hash,assinaturaDecrypt) && this.certificadoPor.verificaAutenticidade();
+                return Arrays.equals(hash, assinaturaDecrypt);
 
             } catch (NoSuchPaddingException
                     | NoSuchAlgorithmException
