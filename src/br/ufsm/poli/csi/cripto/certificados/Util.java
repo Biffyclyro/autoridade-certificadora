@@ -17,10 +17,12 @@ public class Util {
      * @return byte array do hash deste certificado.
      */
     public static synchronized byte[] getHash(Assinavel objeto) {
+
         byte[] certData;
         byte[] assinTemp = objeto.getAssinatura();
         objeto.setAssinatura(null);
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
+
         try {
             ObjectOutputStream oout = new ObjectOutputStream(bout);
             oout.writeObject(objeto);

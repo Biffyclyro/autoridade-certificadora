@@ -66,17 +66,18 @@ public class Certificado implements Assinavel {
      */
     public boolean verificaAutenticidade() {
 
-        if(!this.validade.after(Date.from(Instant.from(LocalDate.now() ) ) )
+        if(!this.validade.after(new Date())
                 && !this.autoridadeCertificadora.estaRevogado(this.certificadoPor) ) {
-            final var cert = this;
-            final var assinatura = cert.assinatura;
-            cert.setAssinatura(null);
-            final var hash = Util.getHash(cert);
+
+            final var assinatura = this.assinatura;
+            this.setAssinatura(null);
+            final var hash = Util.getHash(this);
 
             try {
                 final var cipherAssinatura = Cipher.getInstance("RSA");
                 cipherAssinatura.init(Cipher.DECRYPT_MODE, this.getChavePublica());
                 final var assinaturaDecrypt = cipherAssinatura.doFinal(assinatura);
+                this.setAssinatura(assinatura);
 
                 return Arrays.equals(hash,assinaturaDecrypt) && this.certificadoPor.verificaAutenticidade();
 
