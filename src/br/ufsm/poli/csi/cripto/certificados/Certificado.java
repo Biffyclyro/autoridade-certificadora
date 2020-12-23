@@ -65,8 +65,9 @@ public class Certificado implements Assinavel {
      * @return booleano que representa a autenticidade ou não deste certificado.
      */
     public boolean verificaAutenticidade() {
+
         if(!this.validade.after(Date.from(Instant.from(LocalDate.now() ) ) )
-                && this.autoridadeCertificadora.estaRevogado(this.certificadoPor) ) {
+                && !this.autoridadeCertificadora.estaRevogado(this.certificadoPor) ) {
             final var cert = this;
             final var assinatura = cert.assinatura;
             cert.setAssinatura(null);
@@ -77,7 +78,7 @@ public class Certificado implements Assinavel {
                 cipherAssinatura.init(Cipher.DECRYPT_MODE, this.getChavePublica());
                 final var assinaturaDecrypt = cipherAssinatura.doFinal(assinatura);
 
-                return Arrays.equals(hash,assinaturaDecrypt);
+                return Arrays.equals(hash,assinaturaDecrypt) && this.certificadoPor.verificaAutenticidade();
 
             } catch (NoSuchPaddingException
                     | NoSuchAlgorithmException
@@ -87,7 +88,9 @@ public class Certificado implements Assinavel {
                 throw new RuntimeException(e);
             }
 
+
         }
+
 
 
         return false;
