@@ -1,0 +1,8 @@
+Implementar:
+ - []a assinatura de documentos (classe DocumentoAssinado);
+ - [X]a autenticidade de documentos (classe DocumentoAssinado);
+ - []a autenticação de Certificados (classe Certificado);
+ - []a autenticidade de Certificados (classe Certificado);
+ - [X]a persistência e recuperação de Certificados Completos (classe CertificadoPrivado);
+ - [X]os serviços da interface AutoridadeCertificadora;
+ - []casos de teste para todos os requisitos anteriores;
