@@ -1,9 +1,6 @@
 package test;
 
-import br.ufsm.poli.csi.cripto.certificados.AutoridadeCertificadoraImpl;
-import br.ufsm.poli.csi.cripto.certificados.Certificado;
-import br.ufsm.poli.csi.cripto.certificados.CertificadoPrivado;
-import br.ufsm.poli.csi.cripto.certificados.Util;
+import br.ufsm.poli.csi.cripto.certificados.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -20,16 +17,43 @@ public class AppTest {
 
     @Test
     public void verificaAutoridade() throws NoSuchAlgorithmException {
-        final var pairGeneratorGen = KeyPairGenerator.getInstance("RSA");
-        final var pair = pairGeneratorGen.generateKeyPair();
 
-       final var certificado = new Certificado(pair.getPublic(),
-               "Certificado teste",
-               "00000", "teste@teste",
-               "bol.com",
-               Certificado.TipoCertificado.USUARIO_FINAL);
 
-       final var cp = new CertificadoPrivado()
+
+
+       final var cpRaiz = new CertificadoPrivado("Teste Raiz",
+                                            "00000000",
+                                            "teste@raiz",
+                                            "bol.com",
+                                            Certificado.TipoCertificado.CA_RAIZ);
+
+       final var CA_RAIZ = new AutoridadeCertificadoraImpl(cpRaiz);
+
+       final var cp_CA = new CertificadoPrivado("CA teste",
+                                                "1111111",
+                                                "teste@CA",
+                                                "aol.com",
+                                                Certificado.TipoCertificado.CA);
+
+       final var CA = new AutoridadeCertificadoraImpl(cp_CA);
+
+       CA_RAIZ.assinaCertificado(CA.getCertificado());
+
+       final var cpUsuario = new CertificadoPrivado("Usuario final",
+                                                    "22222222",
+                                                    "fulano@teste",
+                                                    "funalaners.com",
+                                                    Certificado.TipoCertificado.USUARIO_FINAL);
+       CA.assinaCertificado(cpUsuario.getCertificado());
+
+       final var documento = cpUsuario.assinaDocumento(new byte[10],
+               "Arquivo_teste",
+               "RFC 2046");
+
+        Assertions.assertNotNull(documento.getAssinatura() );
+
+
+
     }
 
     @Test
