@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Interface que representa uma Autoridade de Certificação digital,
  * bem como todos os serviços que esta deverá prover.
  */
-public interface AutoridadeCertificadora extends Serializable {
+public interface AutoridadeCertificadora  {
 
     /**
      * Assina o certificado recebido por parâmetro.

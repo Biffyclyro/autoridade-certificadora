@@ -1,5 +1,5 @@
 Implementar:
- - []a assinatura de documentos (classe DocumentoAssinado);
+ - [X]a assinatura de documentos (classe DocumentoAssinado);
  - [X]a autenticidade de documentos (classe DocumentoAssinado);
  - []a autenticação de Certificados (classe Certificado);
  - []a autenticidade de Certificados (classe Certificado);

@@ -17,22 +17,19 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 public class AppTest {
+
     @Test
-    public void hash() throws NoSuchAlgorithmException {
+    public void verificaAutoridade() throws NoSuchAlgorithmException {
         final var pairGeneratorGen = KeyPairGenerator.getInstance("RSA");
         final var pair = pairGeneratorGen.generateKeyPair();
-        final var certificado = new Certificado(pair.getPublic(),
-                "Fulano",
-                "0000",
-                "email",
-                ".com",
-                Certificado.TipoCertificado.USUARIO_FINAL);
 
-        final var hash = Util.getHash(certificado);
-        certificado.setAssinatura(hash);
+       final var certificado = new Certificado(pair.getPublic(),
+               "Certificado teste",
+               "00000", "teste@teste",
+               "bol.com",
+               Certificado.TipoCertificado.USUARIO_FINAL);
 
-
-
+       final var cp = new CertificadoPrivado()
     }
 
     @Test
@@ -43,8 +40,7 @@ public class AppTest {
                 "teste",
                 Certificado.TipoCertificado.CA_RAIZ);
 
-        final var pairGeneratorGen = KeyPairGenerator.getInstance("RSA");
-        final var pair = pairGeneratorGen.generateKeyPair();
+
 
         final var ca = new AutoridadeCertificadoraImpl(cp);
 

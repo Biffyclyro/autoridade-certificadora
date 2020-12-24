@@ -29,19 +29,19 @@ public class DocumentoAssinado implements Assinavel {
      */
     public boolean verificaAutenticidade() {
         final var assinatura = this.assinatura;
-        final var doc  = this;
-        doc.setAssinatura(null);
+        this.setAssinatura(null);
 
         var validadeAssinatura = false;
         try {
             final var chipherAss= Cipher.getInstance("RSA");
-            chipherAss.init(Cipher.DECRYPT_MODE, doc.certificado.getChavePublica());
+            chipherAss.init(Cipher.DECRYPT_MODE, this.certificado.getChavePublica());
             final var assinaturaDecript = chipherAss.doFinal(assinatura);
-            final var hash = Util.getHash(doc);
+            final var hash = Util.getHash(this);
 
             if (Arrays.equals(assinaturaDecript, hash)) {
                 validadeAssinatura = true;
              }
+
 
         } catch (NoSuchAlgorithmException
                 | NoSuchPaddingException
@@ -51,7 +51,7 @@ public class DocumentoAssinado implements Assinavel {
 
             throw new RuntimeException(e);
         }
-
+        this.setAssinatura(assinatura);
         return this.certificado.verificaAutenticidade() && validadeAssinatura;
     }
 

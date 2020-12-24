@@ -4,13 +4,14 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class AutoridadeCertificadoraImpl implements AutoridadeCertificadora {
+public class AutoridadeCertificadoraImpl implements AutoridadeCertificadora, Serializable {
     private final CertificadoPrivado cp;
     private final List<Certificado> revogados = new ArrayList<>();
 
@@ -25,7 +26,6 @@ public class AutoridadeCertificadoraImpl implements AutoridadeCertificadora {
             certificado.setCertificadoPor(cp.getCertificado());
             certificado.setValidade(new Date());
             var hash = Util.getHash(certificado);
-
 
             try {
                 final var cipherAss = Cipher.getInstance("RSA");

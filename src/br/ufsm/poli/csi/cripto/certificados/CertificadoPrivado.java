@@ -88,12 +88,16 @@ public class CertificadoPrivado implements Serializable {
             final var hash = Util.getHash(documentoAssinado);
             final var assinatura = cipherAssinatura.doFinal(hash);
             documentoAssinado.setAssinatura(assinatura);
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+            return documentoAssinado;
+        } catch (NoSuchAlgorithmException
+                | NoSuchPaddingException
+                | InvalidKeyException
+                | IllegalBlockSizeException
+                | BadPaddingException e) {
             throw new RuntimeException(e);
         }
 
 
-        return documentoAssinado;
     }
 
     public PrivateKey getChavePrivada() {
