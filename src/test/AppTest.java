@@ -16,9 +16,7 @@ import java.util.Date;
 public class AppTest {
 
     @Test
-    public void verificaAutoridade() throws NoSuchAlgorithmException {
-
-
+    public void testar() throws NoSuchAlgorithmException {
 
 
        final var cpRaiz = new CertificadoPrivado("Teste Raiz",
@@ -52,33 +50,22 @@ public class AppTest {
 
         Assertions.assertNotNull(documento.getAssinatura() );
 
+        Assertions.assertTrue(documento.verificaAutenticidade());
+
+        cpUsuario.save();
+
+        final var certSalvo = CertificadoPrivado.findCertificado("Usuario final");
+
+        Assertions.assertTrue(certSalvo.getCertificado().verificaAutenticidade());
+
+
+
+        CA.revogaCertificado(cpUsuario.getCertificado());
+
+        Assertions.assertTrue(CA.estaRevogado(cpUsuario.getCertificado()));
 
 
     }
 
-    @Test
-    public void assinarCertificado() throws NoSuchAlgorithmException {
-        final var cp = new CertificadoPrivado("CA_RAIZ",
-                "000000",
-                "teste@teste.com",
-                "teste",
-                Certificado.TipoCertificado.CA_RAIZ);
 
-
-
-        final var ca = new AutoridadeCertificadoraImpl(cp);
-
-        final var certificado = new Certificado(ca.getCertificado().getChavePublica(),
-                "Fulano",
-                "0000",
-                "email",
-                ".com",
-                Certificado.TipoCertificado.USUARIO_FINAL);
-
-
-        ca.assinaCertificado(certificado);
-        System.out.println(certificado.verificaAutenticidade());
-
-
-    }
 }

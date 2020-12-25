@@ -4,5 +4,5 @@ Implementar:
  - [X]a autenticação de Certificados (classe Certificado);
  - [X]a autenticidade de Certificados (classe Certificado);
  - [X]a persistência e recuperação de Certificados Completos (classe CertificadoPrivado);
- - [X]os serviços da interface AutoridadeCertificadora;
- - [X]casos de teste para todos os requisitos anteriores;
+ - []os serviços da interface AutoridadeCertificadora;
+ - []casos de teste para todos os requisitos anteriores;

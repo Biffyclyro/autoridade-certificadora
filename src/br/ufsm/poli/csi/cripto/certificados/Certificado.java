@@ -75,11 +75,13 @@ public class Certificado implements Assinavel {
 
             try {
                 final var cipherAssinatura = Cipher.getInstance("RSA");
-                cipherAssinatura.init(Cipher.DECRYPT_MODE, this.getChavePublica());
+                cipherAssinatura.init(Cipher.DECRYPT_MODE, this.certificadoPor.getChavePublica());
                 final var assinaturaDecrypt = cipherAssinatura.doFinal(assinatura);
                 this.setAssinatura(assinatura);
 
-                return Arrays.equals(hash, assinaturaDecrypt);
+                return Arrays.equals(hash, assinaturaDecrypt)
+                        && this.certificadoPor.tipoCertificado == TipoCertificado.CA_RAIZ
+                        || this.certificadoPor.verificaAutenticidade();
 
             } catch (NoSuchPaddingException
                     | NoSuchAlgorithmException

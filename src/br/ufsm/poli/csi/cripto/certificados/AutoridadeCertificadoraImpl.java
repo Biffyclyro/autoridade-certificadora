@@ -21,7 +21,8 @@ public class AutoridadeCertificadoraImpl implements AutoridadeCertificadora, Ser
 
     @Override
     public void assinaCertificado(Certificado certificado) {
-        if (this.getCertificado().getTipoCertificado().ordinal() > certificado.getTipoCertificado().ordinal()) {
+        if (this.getCertificado().getTipoCertificado().ordinal()
+                > certificado.getTipoCertificado().ordinal()) {
             certificado.setAutoridadeCertificadora(this);
             certificado.setCertificadoPor(cp.getCertificado());
             certificado.setValidade(new Date());
